@@ -17,12 +17,12 @@ import DeployForm from "@/components/deploy-form";
 import Review from "@/components/review";
 import { api } from "@/trpc/react";
 import { useAccount } from "wagmi";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
+import type { Hex } from "viem";
+import useDeployContract from "@/lib/hooks/use-deploy-contract";
 
 export default function Create() {
   const [currentStep, setCurrentStep] = React.useState(0);
   const { address } = useAccount();
-  const { openConnectModal } = useConnectModal();
   const form = useForm<TCreateSchema>({
     resolver: zodResolver(createSchema),
     defaultValues: {
@@ -47,24 +47,50 @@ export default function Create() {
     form.setValue("features", featureSetCopy);
   };
 
-  useEffect(() => {
-    if (!address && openConnectModal) {
-      openConnectModal();
-    }
-  }, [address]);
-
   const createMutation = api.token.create.useMutation();
-  async function triggerCreate() {
-    if (!address) return;
-    const formValues = form.getValues();
+  const fetchArtifactsMutation = api.token.getArtifacts.useMutation();
 
-    await createMutation.mutateAsync({
-      features: formValues.features,
-      customizeArgs: formValues.customizeArgs,
-      tokenAddress: "0x33666285a3305F1CE2AF4A11A5A22516Ae116A89",
-      userWalletAddress: address,
-    });
+  async function triggerCreate() {
+    await fetchArtifactsMutation.mutateAsync(form.getValues("features"));
   }
+
+  const {
+    deployContract,
+    isLoading: isDeployLoading,
+    response: deployResponse,
+  } = useDeployContract();
+
+  useEffect(() => {
+    if (fetchArtifactsMutation.data) {
+      const deployFormValues = form.getValues("deployArgs");
+      const erc20DeployArgs = [
+        deployFormValues.ownableArgs?.initialOwner,
+        deployFormValues.baseParams.name,
+        deployFormValues.baseParams.symbol,
+        deployFormValues.premintArgs?.premintAmount,
+        deployFormValues.cappedArgs?.cap,
+      ].filter((arg) => arg !== undefined);
+
+      void deployContract({
+        abi: fetchArtifactsMutation.data.abi,
+        bytecode: fetchArtifactsMutation.data.bytecode as Hex,
+        args: erc20DeployArgs,
+      });
+    }
+  }, [fetchArtifactsMutation.data]);
+
+  useEffect(() => {
+    if (deployResponse && address) {
+      const formValues = form.getValues();
+
+      createMutation.mutate({
+        features: formValues.features,
+        customizeArgs: formValues.customizeArgs,
+        tokenAddress: deployResponse.address,
+        userWalletAddress: address,
+      });
+    }
+  }, [deployResponse, address]);
 
   return (
     <Container variant="fluid">
@@ -124,7 +150,11 @@ export default function Create() {
                   <Review
                     form={form}
                     triggerCreate={triggerCreate}
-                    isCreating={createMutation.isPending}
+                    isCreating={
+                      createMutation.isPending ||
+                      isDeployLoading ||
+                      fetchArtifactsMutation.isPending
+                    }
                   />
                 )}
               </div>

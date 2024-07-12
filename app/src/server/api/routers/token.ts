@@ -1,7 +1,9 @@
 import { z } from "zod";
 
+import { ContractService, LlmService } from "@defibuilder/sdk";
+
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import { featureNames } from "@/lib/features";
+import { featureNames, featuresToOptionsERC20 } from "@/lib/features";
 import { isAddress } from "viem";
 
 export const tokenRouter = createTRPCRouter({
@@ -26,6 +28,22 @@ export const tokenRouter = createTRPCRouter({
         },
       });
     }),
+
+  getArtifacts: publicProcedure
+    .input(z.set(z.enum(featureNames)))
+    .mutation(async ({ input }) => {
+      const erc20Options = featuresToOptionsERC20([...input]);
+      const sourceCode = await ContractService.buildERC20(erc20Options);
+      const artifacts = await LlmService.buildCode(sourceCode);
+
+      if (!artifacts.success) throw new Error(artifacts.message);
+
+      return {
+        abi: artifacts.artifact.abi,
+        bytecode: artifacts.artifact.bytecode,
+      };
+    }),
+
   create: publicProcedure
     .input(
       z.object({
