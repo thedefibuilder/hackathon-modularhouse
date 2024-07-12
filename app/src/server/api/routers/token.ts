@@ -17,6 +17,15 @@ export const tokenRouter = createTRPCRouter({
         take: input.limit,
       });
     }),
+  get: publicProcedure
+    .input(z.object({ address: z.string().refine((v) => isAddress(v)) }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.token.findFirst({
+        where: {
+          address: input.address,
+        },
+      });
+    }),
   create: publicProcedure
     .input(
       z.object({
