@@ -1,20 +1,61 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model User {
+  walletAddress String @id
 
-    @@index([name])
+  createdTokens Token[]
+  comments      Comment[]
+  ratings       Rating[]
+}
+
+model Token {
+  address   String   @id 
+  createdAt DateTime @default(now())
+
+  name String
+
+  description String?
+  twitterUrl  String?
+  telegramUrl String?
+  discordUrl  String?
+  websiteUrl  String?
+
+  featureNames String[] 
+
+  ratings  Rating[]
+  comments Comment[]
+
+  creator              User   @relation(fields: [creatorWalletAddress], references: [walletAddress])
+  creatorWalletAddress String
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+
+  token   Token  @relation(fields: [tokenId], references: [address])
+  tokenId String
+
+  author              User   @relation(fields: [authorWalletAddress], references: [walletAddress])
+  authorWalletAddress String
+}
+
+model Rating {
+  id        Int      @id @default(autoincrement())
+  rating    Int
+  createdAt DateTime @default(now())
+
+  token   Token  @relation(fields: [tokenId], references: [address])
+  tokenId String
+
+  author              User   @relation(fields: [authorWalletAddress], references: [walletAddress])
+  authorWalletAddress String
 }

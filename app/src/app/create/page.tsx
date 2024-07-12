@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import { createSchema, type TCreateSchema } from "@/lib/schemas";
 
@@ -15,10 +15,14 @@ import { Container } from "@/components/common/grid";
 import CustomizeForm from "@/components/customize-form";
 import DeployForm from "@/components/deploy-form";
 import Review from "@/components/review";
+import { api } from "@/trpc/react";
+import { useAccount } from "wagmi";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 export default function Create() {
-  const [isCreating, setIsCreating] = React.useState(false);
   const [currentStep, setCurrentStep] = React.useState(0);
+  const { address } = useAccount();
+  const { openConnectModal } = useConnectModal();
   const form = useForm<TCreateSchema>({
     resolver: zodResolver(createSchema),
     defaultValues: {
@@ -43,16 +47,23 @@ export default function Create() {
     form.setValue("features", featureSetCopy);
   };
 
+  useEffect(() => {
+    if (!address && openConnectModal) {
+      openConnectModal();
+    }
+  }, [address]);
+
+  const createMutation = api.token.create.useMutation();
   async function triggerCreate() {
-    setIsCreating(true);
-    console.log("CREATING");
+    if (!address) return;
     const formValues = form.getValues();
-    console.log(formValues);
 
-    // deploy
-    // add to db
-
-    setIsCreating(false);
+    await createMutation.mutateAsync({
+      features: formValues.features,
+      customizeArgs: formValues.customizeArgs,
+      tokenAddress: "0x33666285a3305F1CE2AF4A11A5A22516Ae116A89",
+      userWalletAddress: address,
+    });
   }
 
   return (
@@ -64,6 +75,8 @@ export default function Create() {
           steps={createRoutes}
           onClickStep={async (step, setStep) => {
             const isMovingForward = step > currentStep;
+
+            if (createMutation.isPending) return;
 
             if (isMovingForward) {
               let isValid = false;
@@ -81,9 +94,7 @@ export default function Create() {
                   return;
               }
 
-              if (!isValid || step > currentStep + 1) {
-                return;
-              }
+              if (!isValid || step > currentStep + 1) return;
             }
 
             setCurrentStep(step);
@@ -113,7 +124,7 @@ export default function Create() {
                   <Review
                     form={form}
                     triggerCreate={triggerCreate}
-                    isCreating={isCreating}
+                    isCreating={createMutation.isPending}
                   />
                 )}
               </div>
