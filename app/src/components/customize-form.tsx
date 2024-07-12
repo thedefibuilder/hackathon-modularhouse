@@ -4,6 +4,7 @@ import type { createSchema } from "@/lib/schemas";
 import type { useForm } from "react-hook-form";
 import type { z } from "zod";
 import ControlledFormInput from "./common/controlled-form/input";
+import ControlledFormTextarea from "./common/controlled-form/textarea";
 
 type TCustomizeFormProps = {
   form: ReturnType<typeof useForm<z.infer<typeof createSchema>>>;
@@ -19,7 +20,7 @@ export default function CustomizeForm({ form }: TCustomizeFormProps) {
         placeholder="Enter the name of your token"
       />
 
-      <ControlledFormInput
+      <ControlledFormTextarea
         control={form.control}
         label="Description"
         name="customizeArgs.description"
