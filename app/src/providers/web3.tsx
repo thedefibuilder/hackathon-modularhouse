@@ -3,6 +3,7 @@
 import React from "react";
 
 import type { PropsWithChildren } from "react";
+import "@rainbow-me/rainbowkit/styles.css";
 
 import {
   getDefaultConfig,
