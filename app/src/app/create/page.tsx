@@ -8,14 +8,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { EFeatureName, getFeatureConfig } from "@/lib/features";
 import FeaturesSelect from "@/components/features-select";
-import { useForm } from "react-hook-form";
-import { Step, Stepper, useStepper } from "@/components/stepper";
+import { FormProvider, useForm } from "react-hook-form";
+import { Step, Stepper } from "@/components/stepper";
 import { createRoutes, ECreateRoutes } from "@/lib/routes";
 import { Container } from "@/components/common/grid";
-import { Button } from "@/components/ui/button";
+import CustomizeForm from "@/components/customize-form";
 
 export default function Create() {
-  const { nextStep } = useStepper();
   const form = useForm<TCreateSchema>({
     resolver: zodResolver(createSchema),
     defaultValues: {
@@ -43,36 +42,37 @@ export default function Create() {
   return (
     <Container variant="fluid">
       <div className="h-10" />
+      <FormProvider {...form}>
+        <Stepper
+          initialStep={0}
+          steps={createRoutes}
+          onClickStep={(step, setStep) => {
+            setStep(step);
+          }}
+        >
+          {createRoutes.map((stepProps, index) => (
+            <Step key={stepProps.name} index={index} {...stepProps}>
+              <div className="h-10" />
+              <div className="flex flex-col items-center justify-center space-y-5">
+                {stepProps.name === ECreateRoutes.Customize && (
+                  <CustomizeForm form={form} />
+                )}
 
-      <Stepper initialStep={0} steps={createRoutes}>
-        {createRoutes.map((stepProps, index) => (
-          <Step key={stepProps.name} index={index} {...stepProps}>
-            <div className="h-10" />
-            <div className="flex h-screen flex-col items-center justify-center space-y-5">
-              {stepProps.name === ECreateRoutes.Customize && (
-                <div>Customize</div>
-              )}
+                {stepProps.name === ECreateRoutes.Features && (
+                  <FeaturesSelect
+                    activeFeatures={[...activeFeatures]}
+                    toggleFeature={toggleFeature}
+                  />
+                )}
 
-              {stepProps.name === ECreateRoutes.Features && (
-                <FeaturesSelect
-                  activeFeatures={[...activeFeatures]}
-                  toggleFeature={toggleFeature}
-                />
-              )}
+                {stepProps.name === ECreateRoutes.Deploy && <div>Deploy</div>}
 
-              {stepProps.name === ECreateRoutes.Deploy && <div>Deploy</div>}
-
-              {stepProps.name === ECreateRoutes.Review && <div>Review</div>}
-
-              {stepProps.name !== ECreateRoutes.Review && (
-                <Button type="button" onClick={nextStep}>
-                  Next
-                </Button>
-              )}
-            </div>
-          </Step>
-        ))}
-      </Stepper>
+                {stepProps.name === ECreateRoutes.Review && <div>Review</div>}
+              </div>
+            </Step>
+          ))}
+        </Stepper>
+      </FormProvider>
     </Container>
   );
 }
