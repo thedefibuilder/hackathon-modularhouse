@@ -107,27 +107,20 @@ export const features: TFeature[] = [
   },
 ];
 
-// export const featuresToOptionsERC20 = (featureNames: EFeatureName[]) => {
-//   return {
-//     burnable: featureNames.includes(EFeatureName.ERC20_BURNABLE),
-//     pausable: featureNames.includes(EFeatureName.ERC20_PAUSABLE),
-//     premint: featureNames.includes(EFeatureName.ERC20_PREMINT),
-//     cap: featureNames.includes(EFeatureName.ERC20_CAPPED),
-//     mintable: featureNames.includes(EFeatureName.ERC20_MINTABLE),
-//     permit: featureNames.includes(EFeatureName.ERC20_PERMIT),
-//     votes: featureNames.includes(EFeatureName.ERC20_VOTES),
-//     flashmint: featureNames.includes(EFeatureName.ERC20_FLASH_MINT),
-//     ownable: featureNames.includes(EFeatureName.ACCESS_OWNABLE),
-//   } satisfies TERC20Options;
-// };
+export function getFeatureConfig(featureName: EFeatureName) {
+  return features.find((feature) => feature.name === featureName);
+}
 
-// export async function getModuleSourceCode(moduleName: EModuleName, featureNames: EFeatureName[]) {
-//   switch (moduleName) {
-//     case EModuleName.TOKEN:
-//       return ContractService.buildERC20(featuresToOptionsERC20(featureNames));
-//     case EModuleName.PRESALE:
-//       return ContractService.buildPresale(featuresToOptionsPresale(featureNames));
-//     default:
-//       throw new Error('Module not supported');
-//   }
-// }
+export const featuresToOptionsERC20 = (featureNames: EFeatureName[]) => {
+  return {
+    burnable: featureNames.includes(EFeatureName.ERC20_BURNABLE),
+    pausable: featureNames.includes(EFeatureName.ERC20_PAUSABLE),
+    premint: featureNames.includes(EFeatureName.ERC20_PREMINT),
+    cap: featureNames.includes(EFeatureName.ERC20_CAPPED),
+    mintable: featureNames.includes(EFeatureName.ERC20_MINTABLE),
+    permit: featureNames.includes(EFeatureName.ERC20_PERMIT),
+    votes: featureNames.includes(EFeatureName.ERC20_VOTES),
+    flashmint: featureNames.includes(EFeatureName.ERC20_FLASH_MINT),
+    ownable: featureNames.includes(EFeatureName.ACCESS_OWNABLE),
+  };
+};
