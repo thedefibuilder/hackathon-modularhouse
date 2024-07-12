@@ -48,6 +48,7 @@ export default function FeaturesSelect({
               </div>
               <div className="flex items-center gap-4 md:flex-col">
                 <Switch
+                  disabled={feature.required}
                   id={feature.name}
                   checked={isFeatureActive(feature.name)}
                   onClick={() => toggleFeature(feature.name)}

@@ -13,8 +13,12 @@ import { Step, Stepper } from "@/components/stepper";
 import { createRoutes, ECreateRoutes } from "@/lib/routes";
 import { Container } from "@/components/common/grid";
 import CustomizeForm from "@/components/customize-form";
+import DeployForm from "@/components/deploy-form";
+import Review from "@/components/review";
 
 export default function Create() {
+  const [isCreating, setIsCreating] = React.useState(false);
+  const [currentStep, setCurrentStep] = React.useState(0);
   const form = useForm<TCreateSchema>({
     resolver: zodResolver(createSchema),
     defaultValues: {
@@ -39,6 +43,18 @@ export default function Create() {
     form.setValue("features", featureSetCopy);
   };
 
+  async function triggerCreate() {
+    setIsCreating(true);
+    console.log("CREATING");
+    const formValues = form.getValues();
+    console.log(formValues);
+
+    // deploy
+    // add to db
+
+    setIsCreating(false);
+  }
+
   return (
     <Container variant="fluid">
       <div className="h-10" />
@@ -46,14 +62,38 @@ export default function Create() {
         <Stepper
           initialStep={0}
           steps={createRoutes}
-          onClickStep={(step, setStep) => {
+          onClickStep={async (step, setStep) => {
+            const isMovingForward = step > currentStep;
+
+            if (isMovingForward) {
+              let isValid = false;
+              switch (currentStep) {
+                case 0:
+                  isValid = await form.trigger("customizeArgs");
+                  break;
+                case 1:
+                  isValid = await form.trigger("features");
+                  break;
+                case 2:
+                  isValid = await form.trigger("deployArgs");
+                  break;
+                default:
+                  return;
+              }
+
+              if (!isValid || step > currentStep + 1) {
+                return;
+              }
+            }
+
+            setCurrentStep(step);
             setStep(step);
           }}
         >
           {createRoutes.map((stepProps, index) => (
             <Step key={stepProps.name} index={index} {...stepProps}>
               <div className="h-10" />
-              <div className="flex flex-col items-center justify-center space-y-5">
+              <div className="flex h-screen flex-col items-center">
                 {stepProps.name === ECreateRoutes.Customize && (
                   <CustomizeForm form={form} />
                 )}
@@ -65,9 +105,17 @@ export default function Create() {
                   />
                 )}
 
-                {stepProps.name === ECreateRoutes.Deploy && <div>Deploy</div>}
+                {stepProps.name === ECreateRoutes.Deploy && (
+                  <DeployForm form={form} activeFeatures={activeFeatures} />
+                )}
 
-                {stepProps.name === ECreateRoutes.Review && <div>Review</div>}
+                {stepProps.name === ECreateRoutes.Review && (
+                  <Review
+                    form={form}
+                    triggerCreate={triggerCreate}
+                    isCreating={isCreating}
+                  />
+                )}
               </div>
             </Step>
           ))}

@@ -11,7 +11,7 @@ type TCustomizeFormProps = {
 
 export default function CustomizeForm({ form }: TCustomizeFormProps) {
   return (
-    <div>
+    <div className="w-2/3">
       <ControlledFormInput
         control={form.control}
         label="Name"
