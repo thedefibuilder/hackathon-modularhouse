@@ -49,13 +49,13 @@ dependencies:
     version: 5.51.1(react@18.3.1)
   '@trpc/client':
     specifier: ^11.0.0-rc.446
-    version: 11.0.0-rc.458(@trpc/server@11.0.0-rc.458)
+    version: 11.0.0-rc.459(@trpc/server@11.0.0-rc.459)
   '@trpc/react-query':
     specifier: ^11.0.0-rc.446
-    version: 11.0.0-rc.458(@tanstack/react-query@5.51.1)(@trpc/client@11.0.0-rc.458)(@trpc/server@11.0.0-rc.458)(react-dom@18.3.1)(react@18.3.1)
+    version: 11.0.0-rc.459(@tanstack/react-query@5.51.1)(@trpc/client@11.0.0-rc.459)(@trpc/server@11.0.0-rc.459)(react-dom@18.3.1)(react@18.3.1)
   '@trpc/server':
     specifier: ^11.0.0-rc.446
-    version: 11.0.0-rc.458
+    version: 11.0.0-rc.459
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
@@ -2476,7 +2476,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.7
-      napi-wasm: 1.1.0
     dev: false
     bundledDependencies:
       - napi-wasm
@@ -3737,32 +3736,32 @@ packages:
       react: 18.3.1
     dev: false
 
-  /@trpc/client@11.0.0-rc.458(@trpc/server@11.0.0-rc.458):
-    resolution: {integrity: sha512-w++l2Y+G6BJbLp5cMWyjHyMk39EZ4M4qt1GapYRAnPnyD5Eeiznd8vxUA+fiO0SQODXoPYtpnwy0STsRDBSvmw==}
+  /@trpc/client@11.0.0-rc.459(@trpc/server@11.0.0-rc.459):
+    resolution: {integrity: sha512-NQoYP7P2vd2NTNPOvAhvE2SrjCJmNyxcSypHLE71aa97MGteXTv5CYKChAfvwBSkA4pNIs3rfLgYYiZYLdqpcw==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.458+46c7eea82
+      '@trpc/server': 11.0.0-rc.459+e14ad2175
     dependencies:
-      '@trpc/server': 11.0.0-rc.458
+      '@trpc/server': 11.0.0-rc.459
     dev: false
 
-  /@trpc/react-query@11.0.0-rc.458(@tanstack/react-query@5.51.1)(@trpc/client@11.0.0-rc.458)(@trpc/server@11.0.0-rc.458)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-cQGUBGR3g696mgR02/Rk12XcBiQav4R228aXWE/PCNyqU9yND/F/g5ikFakT2iWYXS10VbukcNxKZDzMHbvWJw==}
+  /@trpc/react-query@11.0.0-rc.459(@tanstack/react-query@5.51.1)(@trpc/client@11.0.0-rc.459)(@trpc/server@11.0.0-rc.459)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-gkVI4Tz/NWKjFBFi1DTwsWCC3uqkh8ptshWFP2ZUEIQazuemgnZdh5zSFxboXogroFKce8pKGg9pYAvVLYhkgg==}
     peerDependencies:
       '@tanstack/react-query': ^5.49.2
-      '@trpc/client': 11.0.0-rc.458+46c7eea82
-      '@trpc/server': 11.0.0-rc.458+46c7eea82
+      '@trpc/client': 11.0.0-rc.459+e14ad2175
+      '@trpc/server': 11.0.0-rc.459+e14ad2175
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
     dependencies:
       '@tanstack/react-query': 5.51.1(react@18.3.1)
-      '@trpc/client': 11.0.0-rc.458(@trpc/server@11.0.0-rc.458)
-      '@trpc/server': 11.0.0-rc.458
+      '@trpc/client': 11.0.0-rc.459(@trpc/server@11.0.0-rc.459)
+      '@trpc/server': 11.0.0-rc.459
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /@trpc/server@11.0.0-rc.458:
-    resolution: {integrity: sha512-bKgvime66O+dEqBa1XJbK2Y/U0UXyesz2ckP3dFn4U1p5TubxSxOaVvUuDXq3v1hsvGLykBOV/AUm15+OewdvA==}
+  /@trpc/server@11.0.0-rc.459:
+    resolution: {integrity: sha512-ooFaHkXLNp8YOx5pOQVZOC9el+rKJP8fq/SeljUOoaG1tQYm4LDQ8TYt+iNeMR4Gkx6vMFGmBZ4l9+MoQhU3tQ==}
     dev: false
 
   /@types/debug@4.1.12:
@@ -5255,7 +5254,7 @@ packages:
     resolution: {integrity: sha512-AF3r7P5dWxL8MxyITRMlORQNaOA2IkAFaTr4k7BUumjPtRpGDTZpl0Pb1XCO6JeDCBdp126Cgs9sMxqSjgYyRg==}
     engines: {node: '>= 0.6'}
     dependencies:
-      mime-db: 1.52.0
+      mime-db: 1.53.0
     dev: false
 
   /compression@1.7.4:
@@ -7877,6 +7876,11 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /mime-db@1.53.0:
+    resolution: {integrity: sha512-oHlN/w+3MQ3rba9rqFr6V/ypF10LSkdwUysQL7GkXoTgIWeV+tcXGA852TBxH+gsh8UWoyhR1hKcoMJTuWflpg==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
   /mime-types@2.1.35:
     resolution: {integrity: sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==}
     engines: {node: '>= 0.6'}
@@ -8028,10 +8032,6 @@ packages:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-
-  /napi-wasm@1.1.0:
-    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
-    dev: false
 
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
