@@ -19,8 +19,11 @@ import { api } from "@/trpc/react";
 import { useAccount } from "wagmi";
 import type { Hex } from "viem";
 import useDeployContract from "@/lib/hooks/use-deploy-contract";
+import { useToast } from "@/components/ui/use-toast";
+import { redirect } from "next/navigation";
 
 export default function Create() {
+  const { toast } = useToast();
   const [currentStep, setCurrentStep] = React.useState(0);
   const { address } = useAccount();
   const form = useForm<TCreateSchema>({
@@ -84,6 +87,8 @@ export default function Create() {
       const formValues = form.getValues();
 
       createMutation.mutate({
+        name: formValues.deployArgs.baseParams.name,
+        symbol: formValues.deployArgs.baseParams.symbol,
         features: formValues.features,
         customizeArgs: formValues.customizeArgs,
         tokenAddress: deployResponse.address,
@@ -91,6 +96,26 @@ export default function Create() {
       });
     }
   }, [deployResponse, address]);
+
+  useEffect(() => {
+    switch (createMutation.status) {
+      case "success":
+        toast({
+          title: "Token created",
+          description: "Your token has been created successfully",
+        });
+        redirect(`/`);
+      case "error":
+        toast({
+          title: "Error creating token",
+          description: "An error occurred while creating the token",
+          variant: "destructive",
+        });
+        break;
+      default:
+        return;
+    }
+  }, [createMutation.status]);
 
   return (
     <Container variant="fluid">

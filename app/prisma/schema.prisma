@@ -16,18 +16,20 @@ model User {
 }
 
 model Token {
-  address   String   @id 
+  address   String   @id
   createdAt DateTime @default(now())
 
-  name String
+  name       String
+  symbol     String
 
+  logoBase64 String?
   description String?
   twitterUrl  String?
   telegramUrl String?
   discordUrl  String?
   websiteUrl  String?
 
-  featureNames String[] 
+  featureNames String[]
 
   ratings  Rating[]
   comments Comment[]

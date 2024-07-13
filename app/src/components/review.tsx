@@ -35,7 +35,7 @@ export default function Review({
   ];
 
   return (
-    <div className="w-2/3">
+    <div className="h-full w-2/3">
       {reviewSections.map((section) => (
         <ReviewSection
           key={JSON.stringify(section.values)}

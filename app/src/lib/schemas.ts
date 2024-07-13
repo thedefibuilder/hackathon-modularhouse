@@ -5,8 +5,7 @@ import { isAddress, parseUnits } from "viem";
 export const createSchema = z.object({
   features: z.set(z.enum(featureNames)),
   customizeArgs: z.object({
-    name: z.string(),
-    // logo: z.string().url().optional(), TODO: Add logo support
+    logo: z.string().optional(),
     description: z.string().optional(),
     twitterUrl: z.string().url().optional(),
     telegramUrl: z.string().url().optional(),

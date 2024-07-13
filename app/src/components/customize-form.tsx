@@ -5,6 +5,7 @@ import type { useForm } from "react-hook-form";
 import type { z } from "zod";
 import ControlledFormInput from "./common/controlled-form/input";
 import ControlledFormTextarea from "./common/controlled-form/textarea";
+import ControlledFormFileInput from "./common/controlled-form/file";
 
 type TCustomizeFormProps = {
   form: ReturnType<typeof useForm<z.infer<typeof createSchema>>>;
@@ -13,11 +14,14 @@ type TCustomizeFormProps = {
 export default function CustomizeForm({ form }: TCustomizeFormProps) {
   return (
     <div className="w-2/3">
-      <ControlledFormInput
+      <ControlledFormFileInput
         control={form.control}
-        label="Name"
-        name="customizeArgs.name"
-        placeholder="Enter the name of your token"
+        label="Logo"
+        name="customizeArgs.logo"
+        accept="image/jpeg"
+        setValue={form.setValue}
+        setError={form.setError}
+        clearErrors={form.clearErrors}
       />
 
       <ControlledFormTextarea

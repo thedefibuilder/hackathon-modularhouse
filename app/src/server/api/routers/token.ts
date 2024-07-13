@@ -47,12 +47,13 @@ export const tokenRouter = createTRPCRouter({
   create: publicProcedure
     .input(
       z.object({
+        name: z.string(),
+        symbol: z.string(),
         tokenAddress: z.string().refine((v) => isAddress(v)),
         userWalletAddress: z.string().refine((v) => isAddress(v)),
         features: z.set(z.enum(featureNames)),
         customizeArgs: z.object({
-          name: z.string(),
-          // logo: z.string().url().optional(), TODO: Add logo support
+          logo: z.string().optional(),
           description: z.string().optional(),
           twitterUrl: z.string().url().optional(),
           telegramUrl: z.string().url().optional(),
@@ -65,8 +66,10 @@ export const tokenRouter = createTRPCRouter({
       return await ctx.db.token.create({
         data: {
           address: input.tokenAddress,
-          name: input.customizeArgs.name,
+          name: input.name,
+          symbol: input.symbol,
           featureNames: [...input.features],
+          logoBase64: input.customizeArgs.logo,
           description: input.customizeArgs.description,
           discordUrl: input.customizeArgs.discordUrl,
           twitterUrl: input.customizeArgs.twitterUrl,

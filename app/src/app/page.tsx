@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,7 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { api } from "@/providers/trpc";
+import Image from "next/image";
 import Link from "next/link";
+import PlaceHolderImage from "@/assets/placeholder.jpg";
 
 export default function Home() {
   const tokens = api.token.getLatest.useQuery({});
@@ -30,9 +31,12 @@ export default function Home() {
               </CardHeader>
 
               <CardContent>
-                {
-                  // image
-                }
+                <Image
+                  src={token.logoBase64 ? token.logoBase64 : PlaceHolderImage}
+                  width={100}
+                  height={100}
+                  alt={token.name}
+                />
               </CardContent>
 
               <CardFooter>

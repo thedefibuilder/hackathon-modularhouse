@@ -8,6 +8,7 @@ import { PanelsTopLeftIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import PlaceHolderImage from "@/assets/placeholder.jpg";
 
 export default function TokenDetailPage({
   params,
@@ -66,11 +67,18 @@ export default function TokenDetailPage({
               )}
             </div>
           </div>
+          <div className="mt-12" />
+          <h2 className="mb-4 text-2xl font-bold">About {token?.name}</h2>
+          <p className="text-muted-foreground">
+            {token?.description
+              ? token.description
+              : "No description available."}
+          </p>
         </div>
         <div>
           {token?.name && (
             <Image
-              src="/placeholder.jpg"
+              src={token.logoBase64 ? token.logoBase64 : PlaceHolderImage}
               alt={token.name}
               width={400}
               height={400}
@@ -78,12 +86,6 @@ export default function TokenDetailPage({
             />
           )}
         </div>
-      </div>
-      <div className="mt-12">
-        <h2 className="mb-4 text-2xl font-bold">About {token?.name}</h2>
-        <p className="text-muted-foreground">
-          {token?.description ? token.description : "No description available."}
-        </p>
       </div>
 
       <CommentsSection />

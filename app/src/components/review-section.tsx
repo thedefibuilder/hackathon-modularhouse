@@ -37,8 +37,8 @@ export function ReviewSection({ title, keyValuePair }: TReviewSection) {
                 <Image
                   src={(value as string) ?? ""}
                   alt="Token Logo"
-                  width={200}
-                  height={113}
+                  width={100}
+                  height={70}
                   className="aspect-auto w-1/2 rounded-md"
                 />
               ) : (

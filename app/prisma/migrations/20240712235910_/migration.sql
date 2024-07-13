@@ -10,6 +10,8 @@ CREATE TABLE "Token" (
     "address" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "name" TEXT NOT NULL,
+    "symbol" TEXT NOT NULL,
+    "logoBase64" TEXT,
     "description" TEXT,
     "twitterUrl" TEXT,
     "telegramUrl" TEXT,
