@@ -4,11 +4,12 @@ import DiscordIcon from "@/assets/discord";
 import TelegramIcon from "@/assets/telegram";
 import CommentsSection from "@/components/comments-section";
 import { api } from "@/providers/trpc";
-import { PanelsTopLeftIcon, XIcon } from "lucide-react";
+import { LinkIcon, PanelsTopLeftIcon, XIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import PlaceHolderImage from "@/assets/placeholder.jpg";
+import ExternalAnchor from "@/components/common/external-anchor";
+import { cyberTestnet } from "viem/chains";
 
 export default function TokenDetailPage({
   params,
@@ -28,44 +29,49 @@ export default function TokenDetailPage({
               </h1>
             </div>
             <div className="flex items-center gap-4">
+              {token?.address && (
+                <ExternalAnchor
+                  href={`${cyberTestnet.blockExplorers.default.url}/address/${token.address}`}
+                  className="text-primary hover:underline"
+                >
+                  <LinkIcon className="h-6 w-6" />
+                </ExternalAnchor>
+              )}
+
               {token?.twitterUrl && (
-                <Link
+                <ExternalAnchor
                   href={token.twitterUrl}
                   className="text-primary hover:underline"
-                  prefetch={false}
                 >
                   <XIcon className="h-6 w-6" />
-                </Link>
+                </ExternalAnchor>
               )}
 
               {token?.discordUrl && (
-                <Link
+                <ExternalAnchor
                   href={token.discordUrl}
                   className="text-primary hover:underline"
-                  prefetch={false}
                 >
                   <DiscordIcon />
-                </Link>
+                </ExternalAnchor>
               )}
 
               {token?.telegramUrl && (
-                <Link
+                <ExternalAnchor
                   href={token.telegramUrl}
                   className="text-primary hover:underline"
-                  prefetch={false}
                 >
                   <TelegramIcon />
-                </Link>
+                </ExternalAnchor>
               )}
 
               {token?.websiteUrl && (
-                <Link
+                <ExternalAnchor
                   href={token.websiteUrl}
                   className="text-primary hover:underline"
-                  prefetch={false}
                 >
                   <PanelsTopLeftIcon className="h-6 w-6" />
-                </Link>
+                </ExternalAnchor>
               )}
             </div>
           </div>
