@@ -160,7 +160,9 @@ export default function CommentsSection() {
               </Label>
             </RadioGroup>
           </div>
-          <Button type="submit">Submit</Button>
+          <Button type="submit" variant="outline">
+            Submit
+          </Button>
         </form>
       </div>
     </div>

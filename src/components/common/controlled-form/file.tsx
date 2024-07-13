@@ -86,7 +86,7 @@ export default function ControlledFormFileInput<
           <FormControl>
             <Input
               type="file"
-              className="placeholder:italic"
+              className="cursor-pointer placeholder:italic"
               accept={accept}
               onChange={onUpload}
             />

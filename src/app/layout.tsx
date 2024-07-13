@@ -21,7 +21,7 @@ export default function RootLayout({
       <body>
         <RootProvider>
           <Header />
-          <div className="flex flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+          <div className="flex flex-col items-center justify-center bg-gradient-to-b from-foreground to-background text-white">
             <div className="sm:h-[6rem] md:h-[5rem] lg:h-20" />
             {children}
           </div>

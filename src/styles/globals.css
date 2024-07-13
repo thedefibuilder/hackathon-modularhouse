@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: 278 72% 7%;
-    --foreground: 284 71% 36%;
-    --card: 284 71% 36%;
-    --card-foreground: 288 69% 64%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 20 14.3% 4.1%;
-    --primary: 286 57% 52%; /* Purple (grad-purple) */
-    --primary-foreground: 288 69% 64%; /* Purple light (purple-light) */
-    --secondary: 25 96% 66%; /* Orange */
-    --secondary-foreground: 25 77% 14%; /* Orange bold (orange-bold) */
-    --muted: 0 0% 42%;
-    --muted-foreground: 0 0% 69%;
+    --background: 264, 90%, 12%; /* Dark purple */
+    --foreground: 265, 96%, 22%; /* Purple */
+    --card: 264, 56%, 20%; /* Purple */
+    --card-foreground: 270, 81%, 80%; /* Light purple */
+    --popover: 288 69% 64%; /* White */
+    --popover-foreground: 20 14.3% 4.1%; /* Dark brown */
+    --primary: 270, 81%, 80%; /* Purple (grad-purple) */
+    --primary-foreground: 0, 0%, 100%; /* Light purple (purple-light) */
+    --secondary: 270, 81%, 80%;
+    --secondary-foreground: 288 69% 64%; /* Dark orange (orange-bold) */
+    --muted: 0 0% 42%; /* Gray */
+    --muted-foreground: 0 0% 69%; /* Light gray */
     --accent: 284 71% 36%; /* Purple */
-    --accent-foreground: 288 69% 64%; /* Purple light (purple-light) */
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 60 9.1% 97.8%;
-    --border: 278 72% 7%; /* Dark purple (dark-purple) */
-    --input: 20 5.9% 90%;
-    --ring: 20 14.3% 4.1%;
-    --radius: 0.5rem;
+    --accent-foreground: 288 69% 64%; /* Light purple (purple-light) */
+    --destructive: 0 84.2% 60.2%; /* Red */
+    --destructive-foreground: 60 9.1% 97.8%; /* Pale yellow */
+    --border: 278 72% 7%; /* Very dark purple (dark-purple) */
+    --input: 264, 56%, 20%; /* Light beige */
+    --ring: 20 14.3% 4.1%; /* Dark brown */
+    --radius: 0.5rem; /* Border radius */
   }
 
   .dark {

@@ -24,7 +24,9 @@ export default function Home() {
           <Link key={token.address} href={`/token/${token.address}`}>
             <Card className="w-[350px]">
               <CardHeader>
-                <CardTitle>{token.name}</CardTitle>
+                <CardTitle>
+                  {token.name} {` (${token.symbol})`}
+                </CardTitle>
                 <CardDescription className="truncate">
                   {token.address}
                 </CardDescription>
@@ -36,6 +38,7 @@ export default function Home() {
                   width={100}
                   height={100}
                   alt={token.name}
+                  className="h-[100px] w-[100px] rounded-lg object-cover"
                 />
               </CardContent>
 

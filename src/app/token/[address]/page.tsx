@@ -23,7 +23,9 @@ export default function TokenDetailPage({
         <div>
           <div className="flex flex-col items-start gap-4">
             <div>
-              <h1 className="text-3xl font-bold">{token?.name}</h1>
+              <h1 className="text-3xl font-bold">
+                {token?.name} {`(${token?.symbol})`}
+              </h1>
             </div>
             <div className="flex items-center gap-4">
               {token?.twitterUrl && (
@@ -82,7 +84,7 @@ export default function TokenDetailPage({
               alt={token.name}
               width={400}
               height={400}
-              className="h-auto w-full rounded-lg object-cover"
+              className="h-[400px] w-[400px] rounded-lg object-cover"
             />
           )}
         </div>

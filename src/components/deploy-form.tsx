@@ -54,6 +54,8 @@ export default function DeployForm({ form, activeFeatures }: TDeployForm) {
           placeholder="Enter the premint amount of the token"
         />
       )}
+
+      <div className="h-80" />
     </div>
   );
 }

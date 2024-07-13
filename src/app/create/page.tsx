@@ -155,7 +155,7 @@ export default function Create() {
           {createRoutes.map((stepProps, index) => (
             <Step key={stepProps.name} index={index} {...stepProps}>
               <div className="h-10" />
-              <div className="flex h-screen flex-col items-center">
+              <div className="flex flex-col items-center">
                 {stepProps.name === ECreateRoutes.Customize && (
                   <CustomizeForm form={form} />
                 )}
